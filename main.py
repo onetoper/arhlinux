@@ -6,12 +6,13 @@ import requests
 import subprocess
 from colorama import Fore, init
 from bs4 import BeautifulSoup
-
+from apiverve_phonenumbervalidator.apiClient import PhonenumbervalidatorAPIClient
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-database_path = os.path.join(script_dir, "database.txt")
 
+
+api = PhonenumbervalidatorAPIClient("4ae37b34-e5b8-405c-ae0f-4c39f8b7bc52")
 
 access_token = "1a9fac0a2e4c0c"
 handler = ipinfo.getHandler(access_token)
@@ -61,7 +62,7 @@ def search_ip_in_database(ip_address):
         print(f"\n{Fore.RED}An error occurred: {str(e)}")
 
 
-os.system("clear")
+os.system("cls")
 
 init()
 print(" ")
@@ -89,6 +90,8 @@ while True:
     if choise == 1:
         keyword = input("> enter name/sname and etc to search in format Alexander;Alexandrov: ")
         found_lines = []
+        dbname = input("> enter database name to search in: ")
+        database_path = os.path.join(script_dir, dbname)
         try:
             with open(database_path, "r", encoding="utf-8") as file:
                 for line in file:
