@@ -77,7 +77,7 @@ print(" ")
 while True:
     print("> [1] - searcher")
     print("> [2] - IP info")
-    print("> [3] - number validator")
+    print("> [3] - number info")
     print("> [4] - DoS")
     print("> [5] - osint manuals")
     print("> [6] - swat manuals")
@@ -90,25 +90,43 @@ while True:
     if choise == 1:
         keyword = input("> enter name/sname and etc to search in format Alexander;Alexandrov: ")
         found_lines = []
-        dbname = input("> enter database name to search in: ")
-        database_path = os.path.join(script_dir, dbname)
+        found_results = {}
+        script_dir = os.path.dirname(os.path.abspath(__file__))
         try:
-            with open(database_path, "r", encoding="utf-8") as file:
-                for line in file:
-                    if re.search(keyword, line, re.IGNORECASE):
-                        found_lines.append(line.strip())
+            txt_files = [f for f in os.listdir(script_dir) if f.endswith('.txt')]
+            
+            if not txt_files:
+                print("\n> No .txt files found in directory!")
+                input("> enter some text here to go to main screen...")
+            print(f"\n> Searching in files: {', '.join(txt_files)}")
+
+            for txt_file in txt_files:
+                file_path = os.path.join(script_dir, txt_file)
+                found_lines = []
+
+                print(f"\n> Scanning file: {txt_file}")
+            
+                with open(file_path, "r", encoding="utf-8") as file:
+                    for line in file:
+                        if re.search(keyword, line, re.IGNORECASE):
+                            found_lines.append(line.strip())
+                            print(f"> Found match: {line.strip()}")
             
             if found_lines:
+                found_results[txt_file] = found_lines
+        
+            if found_results:
                 print("\n> Found matches:")
-                for i, found_line in enumerate(found_lines, 1):
-                    print(f"{i}. {found_line}")
+                for file_name, lines in found_results.items():
+                    print(f"\n> In file '{file_name}':")
+                    for i, line in enumerate(lines, 1):
+                        print(f"{i}. {line}")
             else:
-                print("\n> No matches found")
-                
-        except FileNotFoundError:
-            print("\n[!] Error: database file not found!")
+                print("\n> No matches found in any .txt files")
+            
         except Exception as e:
             print(f"\n[!] An error occurred: {str(e)}")
+    
         input("> enter some text here to go to main screen...")
     elif choise == 2:
         ip_address = input("> enter target IP address: ")
