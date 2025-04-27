@@ -89,11 +89,11 @@ while True:
     
     if choise == 1:
         keyword = input("> enter name/sname and etc to search in format Alexander;Alexandrov: ")
-        found_lines = []
         found_results = {}
         script_dir = os.path.dirname(os.path.abspath(__file__))
+        database_dir = os.path.join(script_dir, 'database')
         try:
-            txt_files = [f for f in os.listdir(script_dir) if f.endswith('.txt')]
+            txt_files = [f for f in os.listdir(database_dir) if f.endswith('.txt')]
             
             if not txt_files:
                 print("\n> No .txt files found in directory!")
@@ -101,7 +101,7 @@ while True:
             print(f"\n> Searching in files: {', '.join(txt_files)}")
 
             for txt_file in txt_files:
-                file_path = os.path.join(script_dir, txt_file)
+                file_path = os.path.join(database_dir, txt_file)
                 found_lines = []
 
                 print(f"\n> Scanning file: {txt_file}")
