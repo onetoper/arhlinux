@@ -66,7 +66,7 @@ os.system("cls")
 
 init()
 print(" ")
-print(colorama.Fore.RED + "        ██          ████        ██     ██")
+print("        ██          ████        ██     ██")
 print("       ████         ██  ██      ██     ██")
 print("      ██  ██        ██  ██      █████████")
 print("     ██    ██       ████        ██     ██")
